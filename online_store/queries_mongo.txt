@@ -1,0 +1,127 @@
+-> Obter o nome e a categoria de cada produto com um stock menor do que 10
+
+db.products.find(
+    {"STOCK.QUANTITY": {"$lt": 10}}, 
+    { "_id": 0, "PRODUCT_NAME": 1, "CATEGORY.CATEGORY_NAME": 1}
+).pretty()
+
+
+-> Listar todos os store_users (username,phone_number,email) que fizeram pedidos de uma certa categoria (category_name = 'Monitors') e 
+foram criados depois do mês de março de 2022.
+
+db.store_users.aggregate([
+  {
+    $match: {
+      $expr: {
+        $gte: [
+          { $dateFromString: { dateString: { $arrayElemAt: ["$ORDERS.CREATED_AT", 0] }, format: "%Y-%m-%d %H:%M:%S" } },
+          ISODate("2022-03-01T00:00:00Z")
+        ]
+      }
+    }
+  },
+  { $lookup: {
+      from: "products",
+      localField: "ORDERS.ORDER_ITEMS.PRODUCT_ID",
+      foreignField: "PRODUCT_ID",
+      as: "PRODUCTS"
+    }
+  },
+  { $match: { "PRODUCTS.CATEGORY.CATEGORY_NAME": "Monitors" } },
+  { $project: {
+      _id: 0,
+      USERNAME: 1,
+      PHONE_NUMBER: 1,
+      EMAIL: 1
+    }
+  }
+]).pretty()
+
+
+-> Média dos salários por departamento
+
+db.departments.aggregate([
+  { $unwind: "$EMPLOYEES" },
+  { $group: {
+      _id: "$DEPARTMENT_NAME",
+      averageSalary: { $avg: "$EMPLOYEES.SALARY" }
+    }
+  },
+  { $project: {
+      DEPARTMENT_NAME: "$_id",
+      averageSalary: 1,
+      _id: 0
+    }
+  }
+]).pretty()
+
+
+
+-> Listar todas as sessões de compra criadas por um determinado usuário
+
+db.store_users.find(
+    { "FIRST_NAME": "Evonne", "LAST_NAME": "Warin"},
+    { "_id": 0, "SHOPPING_SESSIONS.SESSION_ID" : 1 , "SHOPPING_SESSIONS.USER_ID" : 1, "SHOPPING_SESSIONS.CREATED_AT": 1, "SHOPPING_SESSIONS.MODIFIED_AT": 1 }
+).pretty()
+
+
+-> Listar todos os produtos (product_name, price, category_name, discount_name, stock) que estão com uma certa promoção de ativa de 15 percento ordená-los pelo o preço dos produtos.
+
+db.products.aggregate([
+  { $match: { "DISCOUNT.IS_ACTIVE_STATUS": "Y", "DISCOUNT.DISCOUNT_PERCENT": 15 } }, 
+  { $project: {
+    "_id": 0,
+    "PRODUCT_NAME": 1,
+    "PRICE": 1,
+    "CATEGORY.CATEGORY_NAME": 1,
+    "DISCOUNT.DISCOUNT_NAME": 1,
+    "STOCK.QUANTITY": 1
+    }
+  },
+  { $sort: { "PRICE": 1 } }
+]).pretty()
+
+
+
+-> Obter o nome, categoria e quantidade vendida dos 4 produtos mais vendidos desde 2021
+
+db.store_users.aggregate([
+  {
+    $match: {
+      $expr: {
+        $gte: [
+          { $dateFromString: { dateString: { $arrayElemAt: ["$ORDERS.CREATED_AT", 0] }, format: "%Y-%m-%d %H:%M:%S" } },
+          ISODate("2021-01-01T00:00:00Z")
+        ]
+      }
+    } 
+  },
+  {
+    $unwind: "$ORDERS"
+  },
+  {
+    $unwind: "$ORDERS.ORDER_ITEMS"
+  },
+  {
+    $group: {
+      _id: "$ORDERS.ORDER_ITEMS.PRODUCT_ID",
+      totalQuantity: { $sum: 1 }
+    }
+  },
+  { $sort: { totalQuantity: -1 } },
+  { $limit: 4 },
+  { $lookup: {
+      from: "products",
+      localField: "_id",
+      foreignField: "PRODUCT_ID",
+      as: "product"
+    }
+  },
+  { $project: {
+      _id: 1,
+      productName: { $arrayElemAt: ["$product.PRODUCT_NAME", 0] },
+      productCategory: { $arrayElemAt: ["$product.CATEGORY.CATEGORY_NAME", 0] },
+      totalQuantity: 1
+    }
+  }
+]).pretty()

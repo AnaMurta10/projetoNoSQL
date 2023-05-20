@@ -1,0 +1,58 @@
+
+->Obter o nome e a categoria de cada produto com um stock menor do que 10
+
+SELECT p.product_name AS Product_Name, pc.category_name AS Category_Name
+FROM PRODUCT p
+INNER JOIN PRODUCT_CATEGORIES pc ON p.category_id = pc.category_id
+INNER JOIN STOCK s ON p.product_id = s.product_id
+WHERE s.quantity < 10;
+
+-> Selecionar todos os produtos de uma certa categoria com um preço 1000 entre 4000
+
+SELECT p.product_name AS Product_name, p.price AS Product_Price
+FROM PRODUCT p
+INNER JOIN PRODUCT_CATEGORIES pc ON p.category_id = pc.category_id
+WHERE pc.category_name = 'Smartphones and Smartwatches'
+AND p.price BETWEEN 1000 AND 4000;
+
+
+-> Listar todas as sessões de compra criadas por um determinado usuário
+
+SELECT ss.*
+FROM SHOPPING_SESSION ss
+INNER JOIN STORE_USERS su ON ss.user_id = su.user_id
+WHERE su.first_name = 'Evonne' AND su.last_name = 'Warin';
+
+-> Listar todos os store_users (username,phone_number,email) que fizeram pedidos de uma certa categoria (category_name = 'Monitors') e 
+foram criados depois do mês de março de 2022.
+
+SELECT su.username AS Username, su.phone_number AS Phone_Number, su.email As Email
+FROM STORE_USERS su
+INNER JOIN ORDER_DETAILS od ON su.user_id = od.user_id
+INNER JOIN ORDER_ITEMS oi ON od.order_details_id = oi.order_details_id
+INNER JOIN PRODUCT p ON oi.product_id = p.product_id
+INNER JOIN PRODUCT_CATEGORIES pc ON p.category_id = pc.category_id
+WHERE pc.category_name = 'Monitors'
+AND EXTRACT(YEAR FROM od.created_at) = 2022
+AND EXTRACT(MONTH FROM od.created_at) > 3;
+
+-> Média dos salários por departamento
+
+SELECT d.department_name AS "Department", AVG(e.salary) AS "Average Salary"
+FROM employees e
+INNER JOIN departments d ON e.department_id = d.department_id
+GROUP BY d.department_name;
+
+
+->  Obter o nome completo, email e nome do departamento dos 4 funcionários com os salários mais altos por ordem descrescente
+
+SELECT e.first_name AS "First Name", e.last_name As "Last Name",
+e.email AS "Email",
+d.department_name AS "Department",
+e.Salary AS "Salary"
+FROM Employees e
+INNER JOIN DEPARTMENTS d ON e.department_id = d.department_id
+ORDER BY e.salary DESC
+FETCH FIRST 4 ROWS ONLY;
+
+
