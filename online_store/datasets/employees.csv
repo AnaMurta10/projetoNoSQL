@@ -1,0 +1,11 @@
+"EMPLOYEE_ID";"FIRST_NAME";"MIDDLE_NAME";"LAST_NAME";"DATE_OF_BIRTH";"DEPARTMENT_ID";"HIRE_DATE";"SALARY";"PHONE_NUMBER";"EMAIL";"SSN_NUMBER";"MANAGER_ID"
+1;"Kenon";"";"Andries";86.07.09;1;19.12.25;9300;"279 266 4806";"gandries0@google.de";"779-22-3853";
+2;"Brittney";"Leonidas";"Dimitriou";76.07.21;2;18.01.08;11800;"604 235 4231";"ldimitriou1@icio.us";"825-48-6752";1
+3;"Elwin";"";"Huckin";78.07.31;3;18.03.15;7400;"997 567 5550";"bhuckin2@thetimes.co.uk";"797-73-9836";1
+4;"Tierney";"Elsinore";"Powis";87.02.10;4;18.11.13;3700;"911 733 7882";"epowis3@4shared.com";"857-99-2873";1
+5;"Jone";"Lew";"Jirusek";75.11.03;2;18.08.04;7400;"563 147 3132";"ljirusek4@psu.edu";"166-19-1878";2
+6;"Clarine";"";"Calliss";91.09.10;2;20.03.30;4400;"950 944 4973";"mcalliss5@earthlink.net";"520-28-8208";2
+7;"Edvard";"";"Presho";88.08.18;3;21.12.18;5200;"826 896 0204";"hpresho6@nature.com";"818-34-0837";3
+8;"Dyan";"Nico";"Craxford";91.07.31;3;18.03.02;3700;"749 923 0075";"ncraxford7@cisco.com";"622-33-9476";3
+9;"Ansel";"Gordan";"Stanborough";88.10.15;4;19.04.20;11200;"912 579 7826";"gstanborough8@webs.com";"810-49-5038";4
+10;"Eileen";"Farra";"Sowerbutts";72.07.06;4;18.03.26;8300;"119 228 0037";"fsowerbutts9@illinois.edu";"373-17-6842";4

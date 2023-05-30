@@ -1,0 +1,44 @@
+-> Obter o nome e a categoria de cada produto com um stock menor do que 10
+
+MATCH (pc:ProductCategories)-[:contains]->(p:Product)<-[:of]-(s:Stock)
+WHERE s.quantity < 10
+RETURN p.product_name AS Name, pc.category_name AS Category
+
+
+-> Listar todos os store_users (username,phone_number,email) que fizeram pedidos de uma certa categoria (category_name = 'Monitors') e 
+foram criados depois do mês de março de 2022.
+
+MATCH (su:StoreUsers)-[o:ordered]->(od:OrderDetails)-[:ordered_a]->(oi:OrderItems)-[:about]->(p:Product)<-[:contains]-(pc:ProductCategories)
+WHERE pc.category_name = 'Monitors' AND
+      toInteger(substring(od.created_at, 6, 2)) >= 1 AND
+      toInteger(substring(od.created_at, 3, 2)) >= 3 AND
+      toInteger(substring(od.created_at, 0, 2)) = 22
+RETURN su.username AS Username, su.phone_number AS Phone_Number, su.email AS Email
+
+
+-> Média dos salários por departamento
+
+MATCH (d:Departments)-[:has]->(e:Employees)
+RETURN d.department_name AS Department, AVG(e.salary) AS Average_Salary
+
+-> Listar todas as sessões de compra criadas por um determinado usuário, "FIRST_NAME": "Evonne", "LAST_NAME": "Warin"
+
+MATCH (su:StoreUsers {first_name: "Evonne", last_name: "Warin"})-[:created]->(ss:ShoppingSession)
+RETURN su.user_id As User_id, ss.session_id AS Session_id, ss.created_at As Created_at, ss.modified_at as Modified_at
+
+
+-> Obter as 5 provincias com maior quantidade de vendas
+
+MATCH (a:Addresses)<-[t:to]-(od:OrderDetails)
+RETURN a.province AS Province, count(od) AS Sales_Quantity
+ORDER BY Sales_Quantity DESC
+LIMIT 5;
+
+
+-> Encontrar os utilizadores que escolheram o mesmo shipping_method
+
+MATCH (su1:StoreUsers)-[:ordered]->(od1:OrderDetails)
+MATCH (su2:StoreUsers)-[:ordered]->(od2:OrderDetails)
+WHERE su1 <> su2 AND od1.shipping_method = od2.shipping_method
+WITH COLLECT(DISTINCT su1.username) AS Usernames, od1.shipping_method AS Shipping_Method
+RETURN Usernames, Shipping_Method, SIZE(Usernames) AS Number_Of_Users

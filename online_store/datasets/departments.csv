@@ -1,0 +1,5 @@
+"DEPARTMENT_ID";"DEPARTMENT_NAME";"MANAGER_ID";"DEPARTMENT_DESC"
+1;"Management";1;"Supervision of other departments"
+2;"Development";2;"Developing of the store's website"
+3;"Purchase department";3;"Management of assortment purchases and stock replenishment"
+4;"Sales department";4;"Managing the sale of the assortment"

@@ -1,0 +1,11 @@
+"EVENT_DATE";"EVENT_TYPE";"USER_NAME";"OLD_EMPLOYEE_ID";"OLD_FIRST_NAME";"OLD_MIDDLE_NAME";"OLD_LAST_NAME";"OLD_DATE_OF_BIRTH";"OLD_DEPARTMENT_ID";"OLD_HIRE_DATE";"OLD_SALARY";"OLD_PHONE_NUMBER";"OLD_EMAIL";"OLD_SSN_NUMBER";"OLD_MANAGER_ID";"NEW_EMPLOYEE_ID";"NEW_FIRST_NAME";"NEW_MIDDLE_NAME";"NEW_LAST_NAME";"NEW_DATE_OF_BIRTH";"NEW_DEPARTMENT_ID";"NEW_HIRE_DATE";"NEW_SALARY";"NEW_PHONE_NUMBER";"NEW_EMAIL";"NEW_SSN_NUMBER";"NEW_MANAGER_ID"
+23.05.08;"INSERT";"LOJA";;"";"";"";;;;;"";"";"";;1;"Kenon";"";"Andries";86.07.09;1;19.12.25;9300;"279 266 4806";"gandries0@google.de";"779-22-3853";
+23.05.08;"INSERT";"LOJA";;"";"";"";;;;;"";"";"";;2;"Brittney";"Leonidas";"Dimitriou";76.07.21;2;18.01.08;11800;"604 235 4231";"ldimitriou1@icio.us";"825-48-6752";1
+23.05.08;"INSERT";"LOJA";;"";"";"";;;;;"";"";"";;3;"Elwin";"";"Huckin";78.07.31;3;18.03.15;7400;"997 567 5550";"bhuckin2@thetimes.co.uk";"797-73-9836";1
+23.05.08;"INSERT";"LOJA";;"";"";"";;;;;"";"";"";;4;"Tierney";"Elsinore";"Powis";87.02.10;4;18.11.13;3700;"911 733 7882";"epowis3@4shared.com";"857-99-2873";1
+23.05.08;"INSERT";"LOJA";;"";"";"";;;;;"";"";"";;5;"Jone";"Lew";"Jirusek";75.11.03;2;18.08.04;7400;"563 147 3132";"ljirusek4@psu.edu";"166-19-1878";2
+23.05.08;"INSERT";"LOJA";;"";"";"";;;;;"";"";"";;6;"Clarine";"";"Calliss";91.09.10;2;20.03.30;4400;"950 944 4973";"mcalliss5@earthlink.net";"520-28-8208";2
+23.05.08;"INSERT";"LOJA";;"";"";"";;;;;"";"";"";;7;"Edvard";"";"Presho";88.08.18;3;21.12.18;5200;"826 896 0204";"hpresho6@nature.com";"818-34-0837";3
+23.05.08;"INSERT";"LOJA";;"";"";"";;;;;"";"";"";;8;"Dyan";"Nico";"Craxford";91.07.31;3;18.03.02;3700;"749 923 0075";"ncraxford7@cisco.com";"622-33-9476";3
+23.05.08;"INSERT";"LOJA";;"";"";"";;;;;"";"";"";;9;"Ansel";"Gordan";"Stanborough";88.10.15;4;19.04.20;11200;"912 579 7826";"gstanborough8@webs.com";"810-49-5038";4
+23.05.08;"INSERT";"LOJA";;"";"";"";;;;;"";"";"";;10;"Eileen";"Farra";"Sowerbutts";72.07.06;4;18.03.26;8300;"119 228 0037";"fsowerbutts9@illinois.edu";"373-17-6842";4
