@@ -1,7 +1,6 @@
 import cx_Oracle as db
 import json
 from datetime import datetime
-import pandas as pd
 
 def serialize_datetime(obj):
     if isinstance(obj, datetime):
@@ -310,7 +309,6 @@ def create_store_users_collection(cursor):
 
     with open("store_users.json", "w") as file:
         file.write(json_data)
-
 
 if __name__ == '__main__':
     db.init_oracle_client(lib_dir=r"C:\instantclient_21_9")

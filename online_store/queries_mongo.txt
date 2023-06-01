@@ -23,7 +23,7 @@ db.store_users.aggregate([
   { $lookup: {
       from: "products",
       localField: "ORDERS.ORDER_ITEMS.PRODUCT_ID",
-      foreignField: "PRODUCT_ID",
+      foreignField: "_id",
       as: "PRODUCTS"
     }
   },
@@ -113,7 +113,7 @@ db.store_users.aggregate([
   { $lookup: {
       from: "products",
       localField: "_id",
-      foreignField: "PRODUCT_ID",
+      foreignField: "_id",
       as: "product"
     }
   },
