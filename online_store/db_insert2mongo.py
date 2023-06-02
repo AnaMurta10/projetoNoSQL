@@ -1,7 +1,12 @@
 # import cx_Oracle as db
 import json
 from pymongo import MongoClient
+import datetime
 
+def serialize_datetime(obj):
+    if isinstance(obj, datetime):
+        return obj.isoformat()
+    
 def create_views():
     from pymongo import MongoClient
     import json
@@ -94,25 +99,32 @@ def insert_data():
     for i in range(len(departments)):
         departments[i]['_id'] = departments[i]['DEPARTMENT_ID']
         del departments[i]['DEPARTMENT_ID']
+        with open("./json files/departments.json", "w") as file:
+            file.write(json.dumps(departments, default=serialize_datetime))
+
     for i in range(len(orders)):
         orders[i]['_id'] = orders[i]['ORDER_DETAILS_ID']
         del orders[i]['ORDER_DETAILS_ID']
+        with open("./json files/orders.json", "w") as file:
+            file.write(json.dumps(orders, default=serialize_datetime))
+
     for i in range(len(products)):
         products[i]['_id'] = products[i]['PRODUCT_ID']
         del products[i]['PRODUCT_ID']
+        with open("./json files/products.json", "w") as file:
+            file.write(json.dumps(products, default=serialize_datetime))
+
     for i in range(len(store_users)):
         store_users[i]['_id'] = store_users[i]['USER_ID']
         del store_users[i]['USER_ID']
-
-    # db.create_collection('vw_user_cart')
+        with open("./json files/store_users.json", "w") as file:
+            file.write(json.dumps(store_users, default=serialize_datetime))
 
     db.departments.insert_many(departments)
     db.employees_archive.insert_many(employees_archive)
     db.orders.insert_many(orders)
     db.products.insert_many(products)
     db.store_users.insert_many(store_users)
-    
-    db.store_users.insert_one({ 'name': 'Jonathan test'})
     
     create_views()
 
