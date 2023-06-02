@@ -1,0 +1,55 @@
+/*******************************************************************************
+   Create Indexes
+********************************************************************************/
+
+CREATE INDEX emp_department_ix FOR (n:Departments) ON (n.department_id)
+
+CREATE INDEX emp_manager_ix FOR (n:Employees) ON (n.manager_id)
+
+CREATE INDEX emp_name_ix FOR (n:Employees) ON (n.last_name, n.first_name)
+
+CREATE INDEX dept_manager_ix FOR (n:Departments) ON (n.manager_id)
+
+CREATE INDEX emparch_user_ix FOR (n:EmployeesArchive) ON (n.user_name)
+
+CREATE INDEX shopping_session FOR (n:ShoppingSession) ON (n.user_id)
+
+
+
+
+/*******************************************************************************
+   Create View
+********************************************************************************/
+
+Para a view em Neo4j é necessário criar a query numa linguagem de programação tipo python:
+
+my_query = "MATCH (su:StoreUsers) - [:created] -> (ss:ShoppingSession) - [:includes] ->(ci:CartItem)- [:contains_a] -> (p:Product)
+RETURN (su.user_id), (ss.session_id), (ci.product_id), (p.product_name), (p.price), (ci.quantity)"
+
+e assim podemos correr a query em python sempre que necessário "session.run(my_query)"
+
+Também é possivel considerar a view como um procedure e usar a biblioteca APOC como explicado abaixo.
+
+
+
+
+
+/*******************************************************************************
+   Create View
+********************************************************************************/
+Para criar user_defined procedures podemos utilizar a biblioteca APOC.
+Após instalar o APOC podemos chamar 'apoc.custom.asProcedure' para criar o procedure desejado,
+e chamar 'custom.*nome_do_procedure*' para o utilizar.
+Outra opção é criar o procedure em java, compilá-lo para um ficherio .JAR e registá-lo como um 
+plugin no neo4j.
+
+
+
+
+
+/*******************************************************************************
+   Create Trigger
+********************************************************************************/
+Para criar um trigger utiliza-mos a biblioteca APOC novamente e chama-mos 'apoc.trigger.add' 
+para a sua criação.
+
