@@ -7,7 +7,11 @@ def serialize_datetime(obj):
         return obj.isoformat()
 
 def create_products_collection(cursor):
-    #cursor.execute("ALTER TABLE DISCOUNT RENAME COLUMN CREATED_AT TO D_CREATED_AT")
+    cursor.execute(""" SELECT COUNT(*) FROM all_tab_columns WHERE table_name = 'DISCOUNT' AND column_name = 'D_CREATED_AT'""")
+    column_exists = cursor.fetchone()[0]
+
+    if not column_exists:
+        cursor.execute("ALTER TABLE DISCOUNT RENAME COLUMN CREATED_AT TO D_CREATED_AT")   
     
     cursor.execute("SELECT * FROM PRODUCT P JOIN PRODUCT_CATEGORIES C ON P.CATEGORY_ID=C.CATEGORY_ID \
                    LEFT JOIN DISCOUNT D ON P.DISCOUNT_ID = D.DISCOUNT_ID \
@@ -67,7 +71,12 @@ def create_products_collection(cursor):
 
 
 def create_departments_collection(cursor):
-    #cursor.execute("ALTER TABLE EMPLOYEES RENAME COLUMN MANAGER_ID TO E_MANAGER_ID")
+    cursor.execute(""" SELECT COUNT(*) FROM all_tab_columns WHERE table_name = 'EMPLOYEES' AND column_name = 'E_MANAGER_ID'""")
+    column_exists = cursor.fetchone()[0]
+
+    if not column_exists:
+        cursor.execute("ALTER TABLE EMPLOYEES RENAME COLUMN MANAGER_ID TO E_MANAGER_ID")
+    
     cursor.execute("SELECT * FROM EMPLOYEES E JOIN DEPARTMENTS D ON E.DEPARTMENT_ID = D.DEPARTMENT_ID")
 
     results = cursor.fetchall()    
@@ -137,8 +146,18 @@ def create_employees_archive_collection(cursor):
         file.write(json_data)
 
 def create_shopping_session_json(cursor):
-    #cursor.execute("ALTER TABLE CART_ITEM RENAME COLUMN CREATED_AT TO CT_CREATED_AT")
-    #cursor.execute("ALTER TABLE CART_ITEM RENAME COLUMN MODIFIED_AT TO CT_MODIFIED_AT")
+    cursor.execute(""" SELECT COUNT(*) FROM all_tab_columns WHERE table_name = 'CART_ITEM' AND column_name = 'CT_CREATED_AT'""")
+    column_exists = cursor.fetchone()[0]
+
+    if not column_exists:
+        cursor.execute("ALTER TABLE CART_ITEM RENAME COLUMN CREATED_AT TO CT_CREATED_AT")
+
+    cursor.execute(""" SELECT COUNT(*) FROM all_tab_columns WHERE table_name = 'CART_ITEM' AND column_name = 'CT_MODIFIED_AT'""")
+    column_exists = cursor.fetchone()[0]
+
+    if not column_exists:
+        cursor.execute("ALTER TABLE CART_ITEM RENAME COLUMN MODIFIED_AT TO CT_MODIFIED_AT")
+
     cursor.execute("SELECT * FROM CART_ITEM CT JOIN SHOPPING_SESSION SS ON CT.SESSION_ID = SS.SESSION_ID")
     results = cursor.fetchall()    
     shopping_sessions= []
@@ -181,10 +200,30 @@ def create_shopping_session_json(cursor):
         file.write(json_data)
 
 def create_orders_json(cursor):
-    #cursor.execute("ALTER TABLE ORDER_ITEMS RENAME COLUMN CREATED_AT TO OI_CREATED_AT")
-    #cursor.execute("ALTER TABLE ORDER_ITEMS RENAME COLUMN MODIFIED_AT TO OI_MODIFIED_AT")
-    #cursor.execute("ALTER TABLE PAYMENT_DETAILS RENAME COLUMN CREATED_AT TO PD_CREATED_AT")
-    #cursor.execute("ALTER TABLE PAYMENT_DETAILS RENAME COLUMN MODIFIED_AT TO PD_MODIFIED_AT")
+    cursor.execute(""" SELECT COUNT(*) FROM all_tab_columns WHERE table_name = 'ORDER_ITEMS' AND column_name = 'OI_CREATED_AT'""")
+    column_exists = cursor.fetchone()[0]
+
+    if not column_exists:
+        cursor.execute("ALTER TABLE ORDER_ITEMS RENAME COLUMN CREATED_AT TO OI_CREATED_AT")
+    
+    cursor.execute(""" SELECT COUNT(*) FROM all_tab_columns WHERE table_name = 'ORDER_ITEMS' AND column_name = 'OI_MODIFIED_AT'""")
+    column_exists = cursor.fetchone()[0]
+
+    if not column_exists:
+        cursor.execute("ALTER TABLE ORDER_ITEMS RENAME COLUMN MODIFIED_AT TO OI_MODIFIED_AT")
+
+    cursor.execute(""" SELECT COUNT(*) FROM all_tab_columns WHERE table_name = 'PAYMENT_DETAILS' AND column_name = 'PD_CREATED_AT'""")
+    column_exists = cursor.fetchone()[0]
+
+    if not column_exists:
+        cursor.execute("ALTER TABLE PAYMENT_DETAILS RENAME COLUMN CREATED_AT TO PD_CREATED_AT")
+
+    cursor.execute(""" SELECT COUNT(*) FROM all_tab_columns WHERE table_name = 'PAYMENT_DETAILS' AND column_name = 'PD_MODIFIED_AT'""")
+    column_exists = cursor.fetchone()[0]
+
+    if not column_exists:
+        cursor.execute("ALTER TABLE PAYMENT_DETAILS RENAME COLUMN MODIFIED_AT TO PD_MODIFIED_AT")
+
     cursor.execute("SELECT * FROM ORDER_DETAILS OD JOIN ORDER_ITEMS OI ON OD.ORDER_DETAILS_ID = OI.ORDER_DETAILS_ID \
                    LEFT JOIN ADDRESSES A ON OD.DELIVERY_ADRESS_ID = A.ADRESS_ID \
                    LEFT JOIN PAYMENT_DETAILS PD ON PD.ORDER_ID = OD.ORDER_DETAILS_ID")
