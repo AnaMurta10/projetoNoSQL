@@ -22,6 +22,7 @@ dt_shopping_session = pd.read_csv('datasets/shopping_session.csv', sep = ';')
 dt_stock = pd.read_csv('datasets/stock.csv', sep = ';')
 dt_store_users = pd.read_csv('datasets/store_users.csv', sep = ';')
 
+
 with driver.session() as session:
     for _, row in dt_addresses.iterrows():
         query = """
@@ -282,3 +283,103 @@ with driver.session() as session:
         CREATE (oi)-[:about]->(p)
     """
     session.run(queryPO)
+
+    # Remover chaves estrangeiras dos nodos
+    queryRemove = """
+        MATCH (n:PaymentDetails)
+        WHERE n.order_id IS NOT NULL
+        REMOVE n.order_id
+    """
+    session.run(queryRemove)
+
+    queryRemove1 = """
+        MATCH (n:Departments)
+        WHERE n.manager_id IS NOT NULL
+        REMOVE n.manager_id
+    """
+    session.run(queryRemove1)
+
+    queryRemove2 = """
+        MATCH (n:Employees)
+        WHERE n.manager_id IS NOT NULL
+        REMOVE n.manager_id
+    """
+    session.run(queryRemove2)
+
+    queryRemove3 = """
+        MATCH (n:Employees)
+        WHERE n.departmente_id IS NOT NULL
+        REMOVE n.department_id
+    """
+    session.run(queryRemove3)
+
+    queryRemove4 = """
+        MATCH (n:Product)
+        WHERE n.category_id IS NOT NULL
+        REMOVE n.category_id
+    """
+    session.run(queryRemove4)
+
+    queryRemove5 = """
+        MATCH (n:Product)
+        WHERE n.discount_id IS NOT NULL
+        REMOVE n.discount_id
+    """
+    session.run(queryRemove5)
+
+    queryRemove6 = """
+        MATCH (n:CartItem)
+        WHERE n.session_id IS NOT NULL
+        REMOVE n.session_id
+    """
+    session.run(queryRemove6)
+
+    queryRemove7 = """
+        MATCH (n:CartItem)
+        WHERE n.product_id IS NOT NULL
+        REMOVE n.product_id
+    """
+    session.run(queryRemove7)
+
+    queryRemove8 = """
+        MATCH (n:ShoppingSession)
+        WHERE n.user_id IS NOT NULL
+        REMOVE n.user_id
+    """
+    session.run(queryRemove8)
+
+    queryRemove9 = """
+        MATCH (n:OrderDetails)
+        WHERE n.user_id IS NOT NULL
+        REMOVE n.user_id
+    """
+    session.run(queryRemove9)
+
+    queryRemove10 = """
+        MATCH (n:OrderDetails)
+        WHERE n.payment_id IS NOT NULL
+        REMOVE n.payment_id
+    """
+    session.run(queryRemove10)
+
+    queryRemove11 = """
+        MATCH (n:OrderDetails)
+        WHERE n.delivery_adress_id IS NOT NULL
+        REMOVE n.delivery_adress_id
+    """
+    session.run(queryRemove11)
+
+    queryRemove12 = """
+        MATCH (n:OrderItems)
+        WHERE n.product_id IS NOT NULL
+        REMOVE n.product_id
+    """
+    session.run(queryRemove12)
+
+    queryRemove13 = """
+        MATCH (n:OrderItems)
+        WHERE n.order_details_id IS NOT NULL
+        REMOVE n.order_details_id
+    """
+    session.run(queryRemove13)
+
