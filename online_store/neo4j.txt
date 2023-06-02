@@ -35,7 +35,7 @@ Também é possivel considerar a view como um procedure e usar a biblioteca APOC
 
 
 /*******************************************************************************
-   Create View
+   Create Procedure
 ********************************************************************************/
 Para criar user_defined procedures podemos utilizar a biblioteca APOC.
 Após instalar o APOC podemos chamar 'apoc.custom.asProcedure' para criar o procedure desejado,
